@@ -59,6 +59,33 @@ var db = Memoria("linknom", function(exists) {
 
 
 
+// routing methods
+
+app.get('/api/shorten',function(req,res){
+
+    console.log("in shorten function");
+
+    var url = req.query.url; 
+
+    console.log("url : " + url);
+
+    var host = "localhost:3000/"
+
+    var shorturl = randomstring.generate(7);
+
+    console.log("shorturl : " + shorturl);
+
+    db("urls").insert({ url: url, shorturl: shorturl });
+
+    res.send({shorturl: shorturl});
+});
+
+
+
+
+
+
+
 // start node server
 
 app.listen(3000);
