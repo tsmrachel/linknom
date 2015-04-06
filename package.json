@@ -1,0 +1,15 @@
+{
+  "name": "linknom",
+  "version": "",
+  "description": "small link shortener service",
+  "author": "Rachel",
+  "dependencies": {
+    "memoria":"x.x.x",
+    "body-parser": "x.x.x",
+    "express": "4.x",
+    "cors":"x.x",
+    "multer":"x.x.x",
+    "request":"x.x.x",
+    "randomstring":"x.x.x"
+  }
+}
