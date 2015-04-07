@@ -77,9 +77,9 @@ app.get('/api/shorten',function(req,res){
 
     try{
 
-    db("urls").insert({ url: url, shorturl: shorturl });
+        db("urls").insert({ url: url, shorturl: shorturl });
 
-    res.send({shorturl: shorturl});
+        res.send({shorturl: shorturl});
 
     }
 
@@ -88,6 +88,35 @@ app.get('/api/shorten',function(req,res){
         res.send({error : "sorry, something went wrong while processing your request, please try again!"});
     }
     
+});
+
+app.get('/:id',function(req,res){
+
+    console.log("in redirect function");
+
+    var shorturl = req.params.id;
+
+    var result = db("urls").one(function(r) {
+            return r.shorturl === shorturl;
+        }).result;
+
+    if (result === null){
+
+        res.send("<html><p> sorry, we didn't find a matching url for that shortlink </p></html>");
+    }
+
+    else{
+
+        var url = result.url;
+
+        console.log("shorturl : " + shorturl);
+        console.log("url : " + url);
+
+        res.redirect(url);        
+    
+    }
+
+        
 });
 
 
