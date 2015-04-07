@@ -75,10 +75,21 @@ app.get('/api/shorten',function(req,res){
 
     console.log("shorturl : " + shorturl);
 
+    try{
+
     db("urls").insert({ url: url, shorturl: shorturl });
 
     res.send({shorturl: shorturl});
+
+    }
+
+    catch(err){
+
+        res.send({error : "sorry, something went wrong while processing your request, please try again!"});
+    }
+    
 });
+
 
 
 
