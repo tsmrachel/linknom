@@ -90,6 +90,25 @@ app.get('/api/shorten',function(req,res){
     
 });
 
+app.get('/:id',function(req,res){
+
+    console.log("in redirect function");
+
+
+    var shorturl = req.params.id;
+
+
+    url = db("urls").one(function(r) {
+        return r.shorturl === shorturl;
+    }).result.url; 
+
+    console.log("shorturl : " + shorturl);
+    console.log("url : " + url);
+
+    res.redirect(url);
+    
+});
+
 
 
 
