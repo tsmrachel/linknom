@@ -10,6 +10,8 @@
     "cors":"x.x",
     "multer":"x.x.x",
     "request":"x.x.x",
-    "randomstring":"x.x.x"
+    "randomstring":"x.x.x",
+    "express-useragent":"x.x.x",
+    "ipinfo":"x.x.x"
   }
 }

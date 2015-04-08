@@ -1,12 +1,15 @@
+function isNullorUndefined(p1){
 
-// app related modules
+    if (p1 === null || p1 === undefined){
 
-var randomstring = require('randomstring');
+        return true;
+    }
 
+    else {
 
-
-
-
+        return false;
+    }
+};
 
 
 // express related modules
@@ -37,6 +40,18 @@ app.use(bodyParser.urlencoded({
 
 
 
+// app related modules
+
+var randomstring = require('randomstring');
+
+var useragent = require('express-useragent');
+app.use(useragent.express());
+
+var IpInfo = require("ipinfo");
+
+
+
+
 
 // nosql memoria related modules
 
@@ -60,6 +75,7 @@ var db = Memoria("linknom", function(exists) {
 
 
 // routing methods
+
 
 app.get('/api/shorten',function(req,res){
 
@@ -97,8 +113,10 @@ app.get('/:id',function(req,res){
     var shorturl = req.params.id;
 
     var result = db("urls").one(function(r) {
-            return r.shorturl === shorturl;
-        }).result;
+        return r.shorturl === shorturl;
+    }).result;
+
+    
 
     if (result === null){
 
@@ -112,15 +130,67 @@ app.get('/:id',function(req,res){
         console.log("shorturl : " + shorturl);
         console.log("url : " + url);
 
-        res.redirect(url);        
-    
-    }
+        var user_data = {shorturl: shorturl};
 
-        
+
+    // user agent information
+
+    user_data.isMobile = isNullorUndefined(req.useragent.isMobile) ? 'unknown' : req.useragent.isMobile;
+
+    user_data.isTablet = isNullorUndefined(req.useragent.isTablet) ? 'unknown' : req.useragent.isTablet;
+
+    user_data.isDesktop = isNullorUndefined(req.useragent.isDesktop) ? 'unknown' : req.useragent.isDesktop;
+
+    user_data.Browser = isNullorUndefined(req.useragent.Browser) ? 'unknown' : req.useragent.Browser;
+
+    user_data.Version = isNullorUndefined(req.useragent.Version) ? 'unknown' : req.useragent.Version;
+
+    user_data.OS = isNullorUndefined(req.useragent.OS) ? 'unknown' : req.useragent.OS;
+
+    user_data.Platform = isNullorUndefined(req.useragent.Platform) ? 'unknown' : req.useragent.Platform;
+
+
+
+    // Current ip information
+    IpInfo(function (err, cLoc) {
+
+
+        user_data.ip = isNullorUndefined(cLoc.ip) ? 'unknown' : cLoc.ip;
+
+        user_data.hostname = isNullorUndefined(cLoc.hostname) ? 'unknown' : cLoc.hostname;
+
+        user_data.city = isNullorUndefined(cLoc.city) ? 'unknown' : cLoc.city;
+
+        user_data.country = isNullorUndefined(cLoc.country) ? 'unknown' : cLoc.country;
+
+        user_data.loc = isNullorUndefined(cLoc.loc) ? 'unknown' : cLoc.loc;
+
+        user_data.org = isNullorUndefined(cLoc.org) ? 'unknown' : cLoc.org;
+
+        console.log(user_data);
+
+        db("users").insert(user_data);
+    });
+
+    
+
+    console.log(db("users").all().result);
+
+}
+
+
+
+res.redirect(url); 
+
+
 });
 
 
 
+//quickfix for ipinfo being called on favicon.ico load
+app.get('/favicon.ico', function(req, res) {
+    res.sendStatus(404);
+});
 
 
 
