@@ -110,7 +110,6 @@ gulp.task('deploy-styles', function() {
 gulp.task('deploy-server',function(){
   return gulp.src('server/webservices.js')
   .pipe(plugins.stripDebug())
-  .pipe(plugins.uglify())
   .pipe(gulp.dest('deploy/server'));
 })
 
