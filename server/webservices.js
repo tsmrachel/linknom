@@ -256,13 +256,13 @@ app.get('/:id',function(req,res){
 
     user_data.isDesktop = isNullorUndefined(req.useragent.isDesktop) ? 'unknown' : req.useragent.isDesktop;
 
-    user_data.browser = isNullorUndefined(req.useragent.browser) ? 'unknown' : req.useragent.Browser;
+    user_data.browser = isNullorUndefined(req.useragent.Browser) ? 'unknown' : req.useragent.Browser;
 
-    user_data.version = isNullorUndefined(req.useragent.version) ? 'unknown' : req.useragent.Version;
+    user_data.version = isNullorUndefined(req.useragent.Version) ? 'unknown' : req.useragent.Version;
 
-    user_data.os = isNullorUndefined(req.useragent.os) ? 'unknown' : req.useragent.OS;
+    user_data.os = isNullorUndefined(req.useragent.OS) ? 'unknown' : req.useragent.OS;
 
-    user_data.platform = isNullorUndefined(req.useragent.platform) ? 'unknown' : req.useragent.Platform;
+    user_data.platform = isNullorUndefined(req.useragent.Platform) ? 'unknown' : req.useragent.Platform;
 
 
 
