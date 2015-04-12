@@ -1,3 +1,5 @@
+var host = "localhost:3000/";
+
 function isNullorUndefined(p1){
 
     if (p1 === null || p1 === undefined){
@@ -10,6 +12,8 @@ function isNullorUndefined(p1){
         return false;
     }
 };
+
+
 
 
 // express related modules
@@ -85,8 +89,6 @@ app.get('/api/shorten',function(req,res){
 
     console.log("url : " + url);
 
-    var host = "localhost:3000/"
-
     var shorturl = randomstring.generate(7);
 
     console.log("shorturl : " + shorturl);
@@ -95,14 +97,127 @@ app.get('/api/shorten',function(req,res){
 
         db("urls").insert({ url: url, shorturl: shorturl });
 
-        res.send({shorturl: shorturl});
+        res.send({shorturl: host + shorturl});
 
     }
 
     catch(err){
 
-        res.send({error : "sorry, something went wrong while processing your request, please try again!"});
+        res.status(500).send("Sorry, something went wrong while processing your request, please try again!");
     }
+    
+});
+
+
+
+
+app.get('/api/stats',function(req,res){
+
+    console.log("in stats function");
+
+    var url = req.query.url; 
+
+    console.log("url : " + url);
+
+    var key = url.replace(host,'');
+
+    console.log ('shorturl : ' + key);
+
+    var result = db("urls").one(function(r) {
+        return r.shorturl === key;
+    }).result;
+
+    
+
+    if (result === null){
+
+        res.status(404).send("Sorry, we didn't find a matching url for that shortlink");
+    }
+
+    else{
+
+        try{
+
+            var linkVisitors = db("users").all(function(r, i) {
+
+              return r.shorturl===key;
+
+          }).result; 
+
+        }
+
+        catch(err){
+
+            res.status(500).send("Sorry, something went wrong while processing your request, please try again!");
+
+
+        }
+
+
+        console.log('Visitors : ' + linkVisitors);
+
+        if (linkVisitors === null){
+
+            res.status(404).send("Sorry, nobody accessed your link yet =(");
+        }
+
+        else{
+
+            var visitorCount = linkVisitors.length;
+
+            var mobileCount = linkVisitors.filter(function(o) { return o.isMobile; }).length;
+
+            var desktopCount = linkVisitors.filter(function(o) { return o.isDesktop; }).length;
+
+            var tabletCount = linkVisitors.filter(function(o) { return o.isTablet; }).length;
+
+
+            var browserStats = {};
+
+            linkVisitors.forEach(function(o) { 
+
+                console.log(o.browser);
+
+                if (browserStats[o.browser]) {
+
+                    browserStats[o.browser]++;
+
+                } else {
+
+                    browserStats[o.browser] = 1;
+                }
+            });
+
+            var countryStats = {};
+
+            linkVisitors.forEach(function(o) { 
+
+                console.log(o.country);
+
+                if (countryStats[o.country]) {
+
+                    countryStats[o.country]++;
+
+                } else {
+
+                    countryStats[o.country] = 1;
+                }
+            });
+
+            console.log(countryStats);
+
+
+            var stats = [{visitors : visitorCount}, {mobiles : mobileCount, tablets : tabletCount, desktops : desktopCount }, browserStats, countryStats];
+
+            console.log(stats);
+
+            res.send(stats);
+
+        }
+    }
+
+
+
     
 });
 
@@ -120,7 +235,7 @@ app.get('/:id',function(req,res){
 
     if (result === null){
 
-        res.send("<html><p> sorry, we didn't find a matching url for that shortlink </p></html>");
+        res.status(404).send("Sorry, we didn't find a matching url for that shortlink");
     }
 
     else{
@@ -141,13 +256,13 @@ app.get('/:id',function(req,res){
 
     user_data.isDesktop = isNullorUndefined(req.useragent.isDesktop) ? 'unknown' : req.useragent.isDesktop;
 
-    user_data.Browser = isNullorUndefined(req.useragent.Browser) ? 'unknown' : req.useragent.Browser;
+    user_data.browser = isNullorUndefined(req.useragent.browser) ? 'unknown' : req.useragent.browser;
 
-    user_data.Version = isNullorUndefined(req.useragent.Version) ? 'unknown' : req.useragent.Version;
+    user_data.version = isNullorUndefined(req.useragent.version) ? 'unknown' : req.useragent.version;
 
-    user_data.OS = isNullorUndefined(req.useragent.OS) ? 'unknown' : req.useragent.OS;
+    user_data.os = isNullorUndefined(req.useragent.os) ? 'unknown' : req.useragent.os;
 
-    user_data.Platform = isNullorUndefined(req.useragent.Platform) ? 'unknown' : req.useragent.Platform;
+    user_data.platform = isNullorUndefined(req.useragent.platform) ? 'unknown' : req.useragent.platform;
 
 
 
