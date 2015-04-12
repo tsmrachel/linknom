@@ -267,7 +267,7 @@ app.get('/:id',function(req,res){
 
 
     // Current ip information
-    IpInfo(function (err, cLoc) {
+    IpInfo(req.ip,function (err, cLoc) {
 
 
         user_data.ip = isNullorUndefined(cLoc.ip) ? 'unknown' : cLoc.ip;
