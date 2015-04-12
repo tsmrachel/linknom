@@ -1,0 +1,193 @@
+@import "compass/reset";
+@import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-sizing";
+
+
+@function parseInt($n) { /* 2 */
+  @return $n / ($n * 0 + 1);
+}
+
+@mixin rem($property, $values) {
+  $px : (); /* 3 */
+  $rem: (); /* 3 */
+
+  @each $value in $values { /* 4 */
+
+    @if $value == 0 or $value == auto { /* 5 */
+      $px : append($px , $value);
+      $rem: append($rem, $value);
+    }
+
+    @else {
+      $unit: unit($value);    /* 6 */
+      $val: parseInt($value); /* 6 */
+
+      @if $unit == "px" {  /* 7 */
+        $px : append($px,  $value);
+        $rem: append($rem, ($val / 10 + rem));
+      }
+
+      @if $unit == "rem" { /* 7 */
+        $px : append($px,  ($val * 10 + px));
+        $rem: append($rem, $value);
+      }
+    }
+  }
+
+  @if $px == $rem {     /* 8 */
+    #{$property}: $px;  /* 9 */
+  } @else {
+    #{$property}: $px;  /* 9 */
+    #{$property}: $rem; /* 9 */
+  }
+}
+
+
+button {
+   outline: 0;
+}
+
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  @include box-sizing(border-box);
+}
+
+
+html{
+  font-size: 62.5%;
+}
+
+
+body{
+  background-color: #4eb3d3;
+  font-family: 'helvetica', 'verdana', sans-serif;
+}
+
+.nav-bar{
+  height: 40px;
+  @include rem(line-height, 4rem);
+  @include rem(padding-left, 1rem);
+  color: white;
+  font-weight: bold;
+  @include rem(font-size, 2rem);
+  font-family: 'La Belle Aurore', cursive;
+
+}
+
+div {
+  width: 100%;
+}
+
+#container {
+  padding: 20px;
+
+  div{
+    /*margin-bottom: 35px;*/
+    text-align:center;
+  }
+}
+
+.alert{
+  @include rem(font-size, 2rem);
+  @include rem(padding, 3rem);
+  color: white;
+  @include rem(min-height, 8rem);
+  /*font-weight: bold;*/
+}
+
+
+
+input{
+  width: 100%;
+  @include rem(height, 4rem);
+  @include rem(margin-bottom, 1rem);
+  font-family: inherit;
+  @include rem(font-size, 2rem);
+  @include rem(padding, 0rem 1rem);
+  background-color: #f8f8f8;
+  border: 0;
+  @include rem(border-top-left-radius, 5px);
+  @include rem(border-bottom-left-radius, 5px);
+  @include rem(border-top-right-radius, 5px);
+  @include rem(border-bottom-right-radius, 5px);
+}
+
+button {  
+  width: 40%;
+  height: 35px;
+  @include rem(height, 35px);
+  background-color: rgba(255,74,86,1);
+  border: 1px solid rgba(255,74,86,1);
+  @include rem(line-height, 0px);
+  @include rem(font-size, 1.7rem);
+  display: inline-block;
+  @include rem(padding, 20px 15px);
+  @include rem(margin, 10px);
+  @include rem(border-radius, 60px);
+  color: white;
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  z-index: 1;
+
+  &:hover , &:focus{
+    color: white;
+    background-color: #801515;
+    border: 1px solid #801515;
+  }
+}
+
+.button-container{
+  @include rem(margin-bottom, 60px);
+}
+
+
+.footer {
+ position:fixed;
+ left:0px;
+ bottom:0px;
+ height:30px;
+ width:100%;
+ font-size: 0.6em;
+ @include rem(font-size, 1.1rem);
+ text-align: center;
+ color: white;
+ padding-bottom: 1px;
+}
+
+.stats{
+
+}
+
+.data{ 
+      @include rem(font-size, 65px); 
+      color: #c1e6e9;
+      text-transform: uppercase;
+      @include rem(margin, 0 0 2.5px 0);
+    }
+
+.title {
+      font-size: 35px; 
+      color: #c0d8f1;
+      text-transform: uppercase;
+      margin: 21.5px 0 0 12.5px;
+      @include rem(margin, 21.5px 0 0 12.5px);
+    }
+
+
+.section{
+  display: block;
+  width: 100%;
+  @include rem(margin-bottom, 40px);
+}
+
+.one{
+  display: block;
+}
+
+.four{
+  display: inline-block;
+  width: 24%;
+}

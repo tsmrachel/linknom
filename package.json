@@ -4,14 +4,35 @@
   "description": "small link shortener service",
   "author": "Rachel",
   "dependencies": {
-    "memoria":"x.x.x",
+    "memoria": "x.x.x",
     "body-parser": "x.x.x",
     "express": "4.x",
-    "cors":"x.x",
-    "multer":"x.x.x",
-    "request":"x.x.x",
-    "randomstring":"x.x.x",
-    "express-useragent":"x.x.x",
-    "ipinfo":"x.x.x"
+    "cors": "x.x",
+    "multer": "x.x.x",
+    "request": "x.x.x",
+    "randomstring": "x.x.x",
+    "express-useragent": "x.x.x",
+    "ipinfo": "x.x.x"
+  },
+  "devDependencies": {
+    "react-tools": "x.x.x",
+    "gulp": "x.x.x",
+    "gulp-rename": "x.x.x",
+    "tiny-lr": "x.x.x",
+    "gulp-livereload": "x.x.x",
+    "gulp-connect": "x.x.x",
+    "gulp-clean": "x.x.x",
+    "gulp-react": "x.x.x",
+    "gulp-concat": "x.x.x",
+    "gulp-notify": "x.x.x",
+    "gulp-uglify": "x.x.x",
+    "gulp-cache": "x.x.x",
+    "gulp-load-plugins": "x.x.x",
+    "gulp-htmlmin": "x.x.x",
+    "gulp-ruby-sass": "x.x.x",
+    "gulp-minify-css": "x.x.x",
+    "gulp-strip-debug": "x.x.x",
+    "gulp-strip-css-comments": "x.x.x",
+    "karma-chrome-launcher" : "x.x.x"
   }
 }

@@ -1,2 +1,5 @@
 *.memoria
 node_modules/
+.sass-cache/
+dist/
+deploy/
