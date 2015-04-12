@@ -59,7 +59,7 @@ var IpInfo = require("ipinfo");
 
 // nosql memoria related modules
 
-var Memoria = require('Memoria');
+var Memoria = require('memoria');
 
 var db = Memoria("linknom", function(exists) {
 
