@@ -37,20 +37,20 @@
 
   @if $px == $rem {     /* 8 */
     #{$property}: $px;  /* 9 */
-  } @else {
-    #{$property}: $px;  /* 9 */
-    #{$property}: $rem; /* 9 */
+    } @else {
+      #{$property}: $px;  /* 9 */
+      #{$property}: $rem; /* 9 */
+    }
   }
-}
 
 
-button {
+  button {
    outline: 0;
-}
+ }
 
 
-/* apply a natural box layout model to all elements */
-*, *:before, *:after {
+ /* apply a natural box layout model to all elements */
+ *, *:before, *:after {
   @include box-sizing(border-box);
 }
 
@@ -162,19 +162,19 @@ button {
 }
 
 .data{ 
-      @include rem(font-size, 65px); 
-      color: #c1e6e9;
-      text-transform: uppercase;
-      @include rem(margin, 0 0 2.5px 0);
-    }
+  @include rem(font-size, 65px); 
+  color: #c1e6e9;
+  text-transform: uppercase;
+  @include rem(margin, 0 0 2.5px 0);
+}
 
 .title {
-      font-size: 35px; 
-      color: #c0d8f1;
-      text-transform: uppercase;
-      margin: 21.5px 0 0 12.5px;
-      @include rem(margin, 21.5px 0 0 12.5px);
-    }
+  font-size: 35px; 
+  color: #c0d8f1;
+  text-transform: uppercase;
+  margin: 21.5px 0 0 12.5px;
+  @include rem(margin, 21.5px 0 0 12.5px);
+}
 
 
 .section{
@@ -190,4 +190,16 @@ button {
 .four{
   display: inline-block;
   width: 24%;
+}
+
+
+@media only screen and (max-width: 995px) {
+
+  .four{
+    display: block;
+    width: 100%;
+    @include rem(margin-bottom, 40px);
+  }
+
+
 }
